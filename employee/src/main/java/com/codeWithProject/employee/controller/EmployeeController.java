@@ -2,7 +2,10 @@ package com.codeWithProject.employee.controller;
 
 import com.codeWithProject.employee.entity.Employee;
 import com.codeWithProject.employee.service.EmployeeService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +27,36 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
+    }
+
+    @DeleteMapping("/employee/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+        try {
+            employeeService.deleteEmployee(id);
+            return new ResponseEntity<>("Employee with ID " + id + " deleted successfully", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/employee/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployee(id);
+        if (employee == null) {
+            return new ResponseEntity<>("Employee with ID " + id + " not found", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
+    }
+
+    @PatchMapping("/employee/{id}")
+    public ResponseEntity<?> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        Employee updatedEmployee = employeeService.updateEmployee(id, employee);
+        if (updatedEmployee == null) {
+            return new ResponseEntity<>("Employee with ID " + id + " not found", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+        }
     }
 
 }
