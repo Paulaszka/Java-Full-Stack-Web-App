@@ -3,7 +3,6 @@ import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-    
     const [employees, setEmployees] = useState([]);
     const navigate = useNavigate();
 
@@ -77,7 +76,6 @@ const Dashboard = () => {
                     </Table>
                     </Col>
                 </Row>
-
             </Container>
         </>
     )

@@ -4,9 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateUser = () =>{
-
     const {id} = useParams();
-
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({

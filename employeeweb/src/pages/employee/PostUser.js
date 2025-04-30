@@ -35,9 +35,9 @@ const PostUser = () => {
         const data = await response.json();
         console.log("Employee created: ", data)
         navigate("/")
-    } catch (error) {
-        console.log("Error creating employee", error.message);
-    }
+        } catch (error) {
+            console.log("Error creating employee", error.message);
+        }
     }
 
     return (
